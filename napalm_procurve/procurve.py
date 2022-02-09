@@ -403,6 +403,7 @@ class ProcurveDriver(NetworkDriver):
         output = self._send_command(command)
 
         key_mib_table = {
+            "ChassisId": "lldpRemChassisId",
             "System Descr": "lldpRemSysDesc",
             "PortId": "lldpRemPortId",
             "PortType": "lldpRemPortIdSubtype",
