@@ -710,6 +710,9 @@ class ProcurveDriver(NetworkDriver):
         for line in output.splitlines():
             if len(line.split()) == 4:
                 address, mac, eth_type, port = line.split()
+            # Bug: Type static (old firmware)
+            elif len(line.split()) == 3:
+                address, mac, eth_type = line.split()
             else:
                 raise ValueError("Unexpected output from: {}".format(line.split()))
 
