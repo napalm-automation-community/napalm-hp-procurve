@@ -3,6 +3,16 @@ import uuid
 
 from setuptools import setup, find_packages
 try:
+    # pip>=21.x.x
+    from pip._internal.req.constructors import (
+        install_req_from_parsed_requirement,
+    )
+except ImportError:
+    # pip<=20.x.x
+    def install_req_from_parsed_requirement(x):
+        return x
+
+try:
     # pip >=20
     from pip._internal.network.session import PipSession
     from pip._internal.req import parse_requirements
@@ -19,6 +29,8 @@ except ImportError:
 __author__ = 'Andreas Thienemann <andreas@bawue.net>'
 
 install_reqs = parse_requirements('requirements.txt', session=uuid.uuid1())
+install_reqs = [install_req_from_parsed_requirement(req) for req in install_reqs]
+
 reqs = [str(ir.req) for ir in install_reqs]
 
 setup(
